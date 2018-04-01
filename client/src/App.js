@@ -13,7 +13,8 @@ class App extends Component {
     this.state = {
       board: Array(6).fill(0).map(x => Array(8).fill('white')),
       socket: openSocket('http://localhost:1337'),
-      message: 'Waiting for another player...'
+      message: 'Waiting for another player...',
+      yourTurn: false
     }
 
     let self = this
@@ -25,9 +26,9 @@ class App extends Component {
     });
     this.state.socket.on('turn', player => {
       if (player === this.state.color) {
-        this.setState(...self.state, {message: "You're up. What's your move?"})
+        this.setState(...self.state, {message: "You're up. What's your move?", yourTurn: true})
       } else {
-        this.setState(...self.state, {message: player + ' is thinking...'})
+        this.setState(...self.state, {message: player + ' is thinking...', yourTurn: false})
       }
     });
 
@@ -49,7 +50,7 @@ class App extends Component {
           <h1 className="App-title">Connect Four</h1>
         </header>
         <InfoBar color={this.state.color} message={this.state.message} />
-        <Board board={this.state.board} onColumnClick={this.onColumnClick}/>
+        <Board board={this.state.board} onColumnClick={this.onColumnClick} yourTurn={this.state.yourTurn}/>
       </div>
     )
   }
