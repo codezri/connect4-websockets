@@ -33,11 +33,13 @@ class App extends Component {
     });
 
     this.state.socket.on('victory', player => {
+      let newState = {yourTurn: false}
       if (player === this.state.color) {
-        this.setState(...self.state, {message: 'You win!'})
+        newState['message'] = 'You win!'
       } else {
-        this.setState(...self.state, {message: 'You lose!'})
+        newState['message'] = 'You lose!'
       }
+      this.setState(...self.state, newState)
     });
   }
 
