@@ -1,10 +1,9 @@
-const app = require('express')()
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
+const io = require('socket.io')()
 
 let board = Array(6).fill(0).map(x => Array(8).fill('white'))
 
 const players = {'red': null, 'yellow': null}
+
 let player = 'red'
 let gameOver = false
 
@@ -12,13 +11,13 @@ function checkVictory(i, j) {
   const c = board[i][j]
 
   // Check horizontally
-  let count = 0;
+  let count = 0
   // count to the left
   for (let k = 1; k < 4; ++k) {
-    if (j-k < 0) {
+    if (j - k < 0) {
       break
     }
-    if (board[i][j-k] !== c) {
+    if (board[i][j - k] !== c) {
       break
     }
     count++
@@ -28,7 +27,7 @@ function checkVictory(i, j) {
     if (j + k > 7) {
       break
     }
-    if (board[i][j+k] !== c) {
+    if (board[i][j + k] !== c) {
       break
     }
     count++
@@ -40,13 +39,13 @@ function checkVictory(i, j) {
 
 
   // Check vertically
-  count = 0;
+  count = 0
   // count up
   for (let k = 1; k < 4; ++k) {
-    if (i-k < 0) {
+    if (i - k < 0) {
       break
     }
-    if (board[i-k][j] !== c) {
+    if (board[i - k][j] !== c) {
       break
     }
     count++
@@ -56,7 +55,7 @@ function checkVictory(i, j) {
     if (i + k > 5) {
       break
     }
-    if (board[i+k][j] !== c) {
+    if (board[i + k][j] !== c) {
       break
     }
     count++
@@ -67,13 +66,13 @@ function checkVictory(i, j) {
   }
 
   // Check diagonal top-left -> bottom-right
-  count = 0;
+  count = 0
   // count to top-left
   for (let k = 1; k < 4; ++k) {
-    if (i-k < 0 || j-k < 0) {
+    if (i - k < 0 || j - k < 0) {
       break
     }
-    if (board[i-k][j-k] !== c) {
+    if (board[i - k][j - k] !== c) {
       break
     }
     count++
@@ -83,7 +82,7 @@ function checkVictory(i, j) {
     if (i + k > 5 || j + k > 7) {
       break
     }
-    if (board[i+k][j+k] !== c) {
+    if (board[i + k][j + k] !== c) {
       break
     }
     count++
@@ -94,13 +93,13 @@ function checkVictory(i, j) {
   }
 
   // Check diagonal bottom-left -> top-right
-  count = 0;
+  count = 0
   // count to bottom-left
   for (let k = 1; k < 4; ++k) {
     if (i + k > 5 || j - k < 0) {
       break
     }
-    if (board[i+k][j-k] !== c) {
+    if (board[i + k][j - k] !== c) {
       break
     }
     count++
@@ -110,7 +109,7 @@ function checkVictory(i, j) {
     if (i - k < 0 || j + k > 7) {
       break
     }
-    if (board[i-k][j+k] !== c) {
+    if (board[i - k][j + k] !== c) {
       break
     }
     count++
@@ -185,7 +184,7 @@ io.on('connection', function (socket) {
 })
 
 
-const port = 1337;
+const port = 1337
 
 io.listen(port)
-console.log('Listening on port ' + port + '...');
+console.log('Listening on port ' + port + '...')
