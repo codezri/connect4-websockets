@@ -2,11 +2,10 @@ import React from 'react'
 
 const Board = ({board, onColumnClick, yourTurn}) => {
   let cells = []
-  let onClick = onColumnClick
   const style = {cursor: yourTurn? 'pointer' : 'no-drop'}
   for (let i = 0; i < 6; ++i) {
     for (let j = 0; j < 8; ++j) {
-      let cell = <g key={i*8+j} onClick={(_) => onClick(j)} style={style}>
+      let cell = <g key={i*8+j} onClick={(_) => onColumnClick(j)} style={style}>
           <rect x={20 + j * 50} y={i * 50} width={50} height={50} fill={'blue'}/>
           <circle  cx={20 + 24 + j * 50} cy={24 + i * 50} r={15} fill={board[i][j]} />
       </g>
