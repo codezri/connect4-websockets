@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Board = ({board, onColumnClick, yourTurn}) => {
-  let cells = []
+  const cells = []
   const style = {cursor: yourTurn? 'pointer' : 'no-drop'}
   for (let i = 0; i < 6; ++i) {
     for (let j = 0; j < 8; ++j) {
