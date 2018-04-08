@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import './App.css'
 import InfoBar from './components/InfoBar'
 import Board from './components/Board'
-//  import io from 'socket.io'
 import openSocket from 'socket.io-client';
 
 
