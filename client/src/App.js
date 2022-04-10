@@ -4,7 +4,6 @@ import InfoBar from './components/InfoBar'
 import Board from './components/Board'
 import openSocket from 'socket.io-client';
 
-
 class App extends Component {
   constructor(props) {
     super(props)
@@ -18,16 +17,16 @@ class App extends Component {
 
     let self = this
     this.state.socket.on('board', board => {
-      this.setState(...self.state, {board: board})
+      this.setState({...self.state, board: board})
     });
     this.state.socket.on('color', color => {
-      this.setState(...self.state, {color: color})
+      this.setState({...self.state, color: color})
     });
     this.state.socket.on('turn', player => {
       if (player === this.state.color) {
-        this.setState(...self.state, {message: "You're up. What's your move?", yourTurn: true})
+        this.setState({...self.state, message: "You're up. What's your move?", yourTurn: true})
       } else {
-        this.setState(...self.state, {message: player + ' is thinking...', yourTurn: false})
+        this.setState({...self.state, message: player + ' is thinking...', yourTurn: false})
       }
     });
 
@@ -38,7 +37,7 @@ class App extends Component {
       } else {
         newState['message'] = 'You lose!'
       }
-      this.setState(...self.state, newState)
+      this.setState({...self.state, newState})
     });
   }
 

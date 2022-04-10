@@ -1,4 +1,12 @@
-const io = require('socket.io')()
+const { createServer } = require('http')
+const { Server } = require('socket.io')
+
+const httpServer = createServer()
+const io = new Server(httpServer, {
+  cors: {
+    origin: '*'
+  }
+})
 
 let board = null
 const players = {'red': null, 'yellow': null}
@@ -192,5 +200,5 @@ io.on('connection', function (socket) {
 
 reset()
 const port = 1337
-io.listen(port)
+httpServer.listen(port)
 console.log('Listening on port ' + port + '...')
