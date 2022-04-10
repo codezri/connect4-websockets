@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import './App.css'
 import InfoBar from './components/InfoBar'
 import Board from './components/Board'
-import openSocket from 'socket.io-client';
+import { io } from 'socket.io-client'
+
+const socket = io('http://localhost:1337');
 
 class App extends Component {
   constructor(props) {
@@ -10,19 +12,18 @@ class App extends Component {
 
     this.state = {
       board: Array(6).fill(0).map(x => Array(8).fill('white')),
-      socket: openSocket('http://localhost:1337'),
       message: 'Waiting for another player...',
       yourTurn: false
     }
 
     let self = this
-    this.state.socket.on('board', board => {
+    socket.on('board', board => {
       this.setState({...self.state, board: board})
     });
-    this.state.socket.on('color', color => {
+    socket.on('color', color => {
       this.setState({...self.state, color: color})
     });
-    this.state.socket.on('turn', player => {
+    socket.on('turn', player => {
       if (player === this.state.color) {
         this.setState({...self.state, message: "You're up. What's your move?", yourTurn: true})
       } else {
@@ -30,7 +31,7 @@ class App extends Component {
       }
     });
 
-    this.state.socket.on('victory', player => {
+    socket.on('victory', player => {
       let newState = {yourTurn: false}
       if (player === this.state.color) {
         newState['message'] = 'You win!'
@@ -41,7 +42,7 @@ class App extends Component {
     });
   }
 
-  onColumnClick = column => this.state.socket.emit('click', column);
+  onColumnClick = column => socket.emit('click', column);
 
   render() {
     return (
