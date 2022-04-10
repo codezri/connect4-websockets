@@ -4,7 +4,7 @@ import InfoBar from './components/InfoBar'
 import Board from './components/Board'
 import { io } from 'socket.io-client'
 
-const socket = io('http://localhost:1337');
+const socket = io('http://localhost:1337')
 
 class App extends Component {
   constructor(props) {
