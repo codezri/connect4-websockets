@@ -37,7 +37,7 @@ class App extends Component {
       } else {
         newState['message'] = 'You lose!'
       }
-      this.setState({...self.state, newState})
+      this.setState({...self.state, ...newState})
     });
   }
 
